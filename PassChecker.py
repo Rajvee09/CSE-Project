@@ -1,17 +1,17 @@
 import re
 import string
-import getpass  # Library to hide password input
+
 
 def password_strength(password):
     score = 0
     feedback = []
     
-    # 0. Preliminary Check: Common Weak Passwords
+    # Commonly used password
     common_passwords = ["password", "123456", "qwerty", "admin", "welcome"]
     if password.lower() in common_passwords:
         return "Very Weak", ["This is a very common password. Please choose something unique."]
 
-    # 1. Length check
+    # length of password
     if len(password) >= 12:
         score += 2
     elif len(password) >= 8:
@@ -32,13 +32,12 @@ def password_strength(password):
         feedback.append("Add at least one lowercase letter.")
 
     # 4. Number
-    if re.search(r"\d", password): # \d is a regex shortcut for [0-9]
+    if re.search(r"\d", password): 
         score += 1
     else:
         feedback.append("Add at least one number.")
 
-    # 5. Special character
-    # Using string.punctuation covers all standard symbols (!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~)
+
     if any(char in string.punctuation for char in password):
         score += 1
     else:
@@ -58,9 +57,9 @@ def password_strength(password):
 
 print("--- Password Strength Checker ---")
 
-# Try to use getpass to hide input, fallback to input() if running in an IDE that doesn't support it
+
 try:
-    user_password = getpass.getpass("Enter password to check (hidden): ").strip()
+    user_password = input("Enter password to check : ").strip()
 except:
     user_password = input("Enter password to check: ").strip()
 
